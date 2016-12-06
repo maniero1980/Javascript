@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Web worker Demo</title>
+</head>
+<body>
+    <div id="my-div">
+        <label for="message">Message</label>
+        <input type="text" id="input-message">
+        <button type="button" id="send-message">Send-Message</button>
+    </div>
+
+    <ul id="message-list">  </ul>
+
+
+
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.js"> </script>
+    <script>
+
+
+        var worker = new Worker("Demo.js");
+
+        // receive messages from the worker
+        worker.onmessage = function(e){
+            var message = e.data;
+            $('#message-list').append('<li>' + message + '</li>');
+        }
+
+        $('#send-message').click(function() {
+            var message = $('#input-message').val();
+            worker.postMessage(message);
+        });
+
+    </script>
+
+</body>
+</html>
